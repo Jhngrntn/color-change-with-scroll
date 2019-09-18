@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Scroll DEMO</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+		<style>
+			body {
+				font-family: sans-serif;
+				height: 50000px;
+				position:relative;
+			}
+			.counter {
+				position: fixed;
+				top: 50%;
+				left: 50%;
+				
+				border: 3px solid black;
+				font-size: 60px;
+				z-index: 9;
+			}
+			.sky {
+				background: #64e291;
+				position: fixed;
+				top:0;
+				left:0;
+				width: 100vw;
+				height: 100vh;
+				box-size: content-box;
+				opacity: 0;
+				z-index: 1;
+			}
+		</style>
+	
+	</head>
+
+	<body class="d-flex">
+		<div class="counter px-5"><h2>y</h2></div>
+		<div class="sky"></div>
+		<script>
+			$(document).ready(function(){
+				//scroll measurements
+				let winy = $(window).height();
+				let y = $(this).scrollTop() + winy;
+				
+				//site  lengths
+				let head = winy * 10;
+				
+				//if site is reloaded
+				if(y >= head) {
+					$(".sky").css("opacity", 1);
+					
+				}
+				
+				//super-scroll magic
+				$(document).on('scroll', function() {
+					y = $(this).scrollTop() + winy;
+					$(".counter").html("<h2>" + y + "</h2>");
+					if(y<head) {
+						let skyper = (y-winy)/(head-winy);
+						let op = skyper.toFixed(2);
+						$(".sky").css("opacity", op);
+					}
+				
+				});
+				$(".counter").html("<h2>" + y + "</h2>");
+			});
+		</script>
+	</body>
+</html>
